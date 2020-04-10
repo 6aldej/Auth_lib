@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Вход{% endblock %}
+
+{% block content %}
+  <h1>Вход</h1>
+  {% if form.errors %}
+    <p>
+      Ваше имя пользователя или пароль не подошли.
+      Пожалуйста попробуйте еще раз!
+    </p>
+  {% else %}
+    <p>Пожалуйста заполните форму, чтобы войти. Если у вас нет аккаунта <a href="{% url "register" %}">зарегистрируйтесь здесь</a></p>
+  {% endif %}
+  <div class="login-form">
+    <form action="{% url 'login' %}" method="post">
+      {{ form.as_p }}
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{{ next }}" />
+      <p><input type="submit" value="Вход"></p>
+    </form>
+    
+  </div>
+  <div class="social">
+    <ul>
+      <li class="github"><a href="{% url "social:begin" "github" %}">Войти через GITHUB</a></li>
+      <li> <p> используйте домен <b>mysite.com</b> [  <b>http://mysite.com:8000/account/login/</b>  ] чтобы войти через GITHUB </p>
+    </ul>
+  </div>
+{% endblock %}
